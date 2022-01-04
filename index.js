@@ -24,9 +24,9 @@ app.get('/api/:lang/news/', async(req, res) => {
         console.log(error);
     }
     if(newsArray.length)
-        res.json({status: 'success', newsArray});
+        res.json({status: 'success', newsArray, totalItems: newsArray.length});
     else
-        res.json({status: 'error', newsArray});
+        res.json({status: 'error', newsArray, totalItems: 0});
 })
 
 app.get('/api/:lang/news/:category/', async(req, res) => {
@@ -44,9 +44,9 @@ app.get('/api/:lang/news/:category/', async(req, res) => {
     }
       
     if(newsArray.length)
-        res.json({status: 'success', newsArray});
+        res.json({status: 'success', newsArray, totalItems: newsArray.length});
     else
-        res.json({status: 'error', newsArray});
+        res.json({status: 'error', newsArray, totalItems: 0});
 })
 
 
