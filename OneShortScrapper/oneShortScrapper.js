@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
 
-const url = 'https://www.inshorts.com/en/read/';
 
 const formateDateToObject = (date) => {
     let dateDay = '';
@@ -20,7 +19,9 @@ const formateDateToObject = (date) => {
     date = {dateDay, dateMonth, dateYear, weekDay};
     return(date);
 }
-const oneShortScrapper = async() => {
+const oneShortScrapper = async(lang='en', category='') => {
+    const url = `https://www.inshorts.com/${lang}/read/${category}`;
+
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
@@ -125,7 +126,7 @@ const oneShortScrapper = async() => {
         
 
         // push object into array
-        if(title!=='' && author!=='') 
+        if(title!=='' && author!=='' && authorPage.pageName!=='' && authorPage.pageUrl!=='') 
             arr.push({date, title, author, authorPage, description});
     }
     browser.close();
