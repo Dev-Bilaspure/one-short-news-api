@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 
-const url = 'https://www.inshorts.com/en/read';
+const url = 'https://www.inshorts.com/en/read/';
 
 const formateDateToObject = (date) => {
     let dateDay = '';
@@ -32,60 +32,97 @@ const oneShortScrapper = async() => {
     let arr = [];
     for(let i=0;i<=100;i++) {
         // getting title
-        let titleXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[2]/a/span/text()`;
-        let [titleElement] = await page.$x(titleXPath);
         let title = '';
-        if(titleElement) {
-            const titleTxt = await titleElement.getProperty('textContent');
-            title = await titleTxt.jsonValue();
+        try {
+            let titleXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[2]/a/span/text()`;
+            let [titleElement] = await page.$x(titleXPath);
+            
+            if(titleElement) {
+                const titleTxt = await titleElement.getProperty('textContent');
+                title = await titleTxt.jsonValue();
+            }
+        } catch (error) {
+            console.log(error);
         }
+        
 
         // getting author
-        let authorXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[2]/div/span[1]`
-        let [authorElement] = await page.$x(authorXPath);
         let author = '';
-        if(authorElement) {
-            const authorTxt = await authorElement.getProperty('textContent');
-            author = await authorTxt.jsonValue();
+        try {
+            let authorXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[2]/div/span[1]`
+            let [authorElement] = await page.$x(authorXPath);
+            
+            if(authorElement) {
+                const authorTxt = await authorElement.getProperty('textContent');
+                author = await authorTxt.jsonValue();
+            }
+        } catch (error) {
+            console.log(error);
         }
+        
 
         // getting date
-        let dateXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[2]/div/span[3]`;
-        let [dateElement] = await page.$x(dateXPath);
         let date = '';
-        if(dateElement) {
-            const dateTxt = await dateElement.getProperty('textContent');
-            date = await dateTxt.jsonValue();
-            date = formateDateToObject(date);
+        try {
+            let dateXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[2]/div/span[3]`;
+            let [dateElement] = await page.$x(dateXPath);
+            
+            if(dateElement) {
+                const dateTxt = await dateElement.getProperty('textContent');
+                date = await dateTxt.jsonValue();
+                date = formateDateToObject(date);
+            }
+        } catch (error) {
+            console.log(error);
         }
+        
 
         // getting authorPage
         // getting authorPage: url
-        let pageUrlXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[4]/div/a`;
-        let [pageUrlElement] = await page.$x(pageUrlXPath);
         let pageUrl = '';
-        if(pageUrlElement) {
-            const pageUrlTxt = await pageUrlElement.getProperty('href');
-            pageUrl = await pageUrlTxt.jsonValue();
+        try {
+            let pageUrlXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[4]/div/a`;
+            let [pageUrlElement] = await page.$x(pageUrlXPath);
+            
+            if(pageUrlElement) {
+                const pageUrlTxt = await pageUrlElement.getProperty('href');
+                pageUrl = await pageUrlTxt.jsonValue();
+            }
+        } catch (error) {
+            console.log(error);
         }
+        
         // getting authorPage: name
-        let pageNameXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[4]/div/a`;
-        let [pageNameElement] = await page.$x(pageNameXPath);
+        let authorPage = null;
         let pageName = '';
-        if(pageNameElement) {
-            const pageNameTxt = await pageNameElement.getProperty('textContent');
-            pageName = await pageNameTxt.jsonValue();
+        try {
+            let pageNameXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[4]/div/a`;
+            let [pageNameElement] = await page.$x(pageNameXPath);
+            
+            if(pageNameElement) {
+                const pageNameTxt = await pageNameElement.getProperty('textContent');
+                pageName = await pageNameTxt.jsonValue();
+            }
+            authorPage = { pageName, pageUrl };
+        } catch (error) {
+            console.log(error);
         }
-        let authorPage = { pageName, pageUrl };
+        
         
         // getting description
-        let descriptionXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[3]/div[1]`;
-        let [descriptionElement] = await page.$x(descriptionXPath);
         let description = '';
-        if(descriptionElement) {
-            const descriptionTxt = await descriptionElement.getProperty('textContent');
-            description = await descriptionTxt.jsonValue();
+        try {
+            let descriptionXPath = `/html/body/div[4]/div/div[3]/div[${i}]/div/div[3]/div[1]`;
+            let [descriptionElement] = await page.$x(descriptionXPath);
+            
+            if(descriptionElement) {
+                const descriptionTxt = await descriptionElement.getProperty('textContent');
+                description = await descriptionTxt.jsonValue();
+            }
+        } catch (error) {
+            console.log(error);
         }
+        
 
         // push object into array
         if(title!=='' && author!=='') 
