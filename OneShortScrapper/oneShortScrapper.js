@@ -26,12 +26,12 @@ const oneShortScrapper = async(lang='en', category='') => {
     const page = await browser.newPage();
     await page.goto(url);
 
-    await page.waitFor(1000);
-    await page.click("#load-more-btn");
-    await page.waitFor(2000);
+    // await page.waitFor(1000);
+    // await page.click("#load-more-btn");
+    // await page.waitFor(2000);
 
     let arr = [];
-    for(let i=0;i<=100;i++) {
+    for(let i=0;i<=30;i++) {
         // getting title
         let title = '';
         try {

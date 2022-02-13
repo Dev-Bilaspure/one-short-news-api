@@ -9,6 +9,8 @@ app.use(express.json())
 dotenv.config();
 app.use(cors());
 
+const PORT = process.env.PORT || 5000;
+
 let newsArray = [];
 app.get('/api/:lang/news/', async(req, res) => {
     console.log('waiting');
@@ -50,7 +52,7 @@ app.get('/api/:lang/news/:category/', async(req, res) => {
 })
 
 
-const PORT = 5000;
+
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}...`);
 })
